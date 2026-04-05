@@ -1,19 +1,20 @@
 {
   "brand": {
-    "name": "Automotive Android Bridge",
-    "eyebrow": "Automotive Android Installer",
-    "title": "A browser installer for Automotive Android systems.",
-    "description": "Enable ADB on the head unit, connect over WebUSB, review the public script, and run package installs from a single private Cloudflare Pages app.",
-    "supportNote": "The site reads its live script and install manifest from a public GitHub Pages repo, so the frontend can stay private while the actions stay auditable."
+    "name": "Android Car Apps Installer",
+    "eyebrow": "Automotive Android App Installer",
+    "title": "Install cool apps on your gcar 7xx",
+    "description": "This application helps you install apps on your car, and also sets their permissions, you can see which apps below.",
+    "supportNote": "If you want to add an app that is not listed here please contact support IT team."
   },
   "badges": [
-    "Cloudflare Pages ready",
+    "Free & Opensource",
     "WebUSB / WebADB flow",
-    "Public script transparency",
+    "Makes car faster**",
     "Desktop and Android Chrome friendly"
   ],
   "requirements": [
-    "Use Chrome or Edge on a computer, or Chrome on an Android phone with a working OTG adapter.",
+    "Press button How to enable ADB on your car first.", 
+    "Use Chrome or Edge on a computer, or Chrome on an Android phone with a working OTG adapter.",    
     "Connect through the driver-side upper USB-A port with a data cable and OTG adapter.",
     "After ADB is enabled, tap Connect device, select the vehicle in Chrome’s USB picker, and approve USB debugging on the head unit if prompted."
   ],
@@ -146,13 +147,14 @@
     "bullets": [
       "You accept responsibility for any system instability, crashes, or unexpected vehicle behavior.",
       "You accept responsibility for any warranty impact, service refusal, or data loss.",
+      "This tool is nothing to do with any vehicle manufacturer, agent, reseller or affiliate",
       "Only continue if you are comfortable using developer-style tools on the car."
     ],
     "acceptLabel": "I understand, continue",
     "declineLabel": "Cancel"
   },
   "footer": {
-    "byline": "Private frontend, public script and manifest.",
-    "subline": "The live content can be updated from the public repo without redeploying the private site."
+    "byline": "Made in russia with love.",
+    "subline": "This website is not affiliated with any company, peopel or businesses, it is pure AI, **this is sarcasm"
   }
 }
