@@ -4,7 +4,11 @@
     "eyebrow": "Automotive Android App Installer",
     "title": "Install cool apps on your gcar 7xx",
     "description": "This application helps you install apps on your car, and also sets their permissions, you can see which apps below.",
-    "supportNote": "If you want to add an app that is not listed here please contact support IT team."
+    "supportNote": [
+      "If you want to add an app that is not listed here please contact support IT team.",
+      " -currently only lists adb devices for test",
+      " -TODO add Clock/Weather overlay"
+    ]
   },
   "badges": [
     "Free & Opensource",
