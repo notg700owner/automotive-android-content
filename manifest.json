@@ -9,7 +9,8 @@
     ]
   },
   "badges": [
-    "Clock & Weather App",
+    "List ADB Devices *Test*",
+    "TODO: Clock & Weather App",
   ],
   "requirements": [
     "Press button How to enable ADB on your car first.", 
