@@ -6,8 +6,8 @@
     "description": "This application helps you install apps on your car, and also sets their permissions, you can see which apps below.",
     "supportNote": [
       "If you want to add an app that is not listed here please contact support IT team.",
-      "<br> -currently only lists adb devices for test",
-      "<br> -TODO add Clock/Weather overlay"
+      "\n -currently only lists adb devices for test",
+      "\n -TODO add Clock/Weather overlay"
     ]
   },
   "badges": [
