@@ -7,8 +7,10 @@
     "supportNote": "If you want to add an app that is not listed here please contact support IT team."
   },
   "badges": [
-    "List ADB Devices *Test*",
-    "TODO: Clock & Weather App",
+    "Free & Opensource",
+    "WebUSB / WebADB flow",
+    "Makes car faster**",
+    "Desktop and Android Chrome friendly"
   ],
   "requirements": [
     "Press button How to enable ADB on your car first.", 
