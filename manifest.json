@@ -1,0 +1,158 @@
+{
+  "brand": {
+    "name": "Automotive Android Bridge",
+    "eyebrow": "Automotive Android Installer",
+    "title": "A browser installer for Automotive Android systems.",
+    "description": "Enable ADB on the head unit, connect over WebUSB, review the public script, and run package installs from a single private Cloudflare Pages app.",
+    "supportNote": "The site reads its live script and install manifest from a public GitHub Pages repo, so the frontend can stay private while the actions stay auditable."
+  },
+  "badges": [
+    "Cloudflare Pages ready",
+    "WebUSB / WebADB flow",
+    "Public script transparency",
+    "Desktop and Android Chrome friendly"
+  ],
+  "requirements": [
+    "Use Chrome or Edge on a computer, or Chrome on an Android phone with a working OTG adapter.",
+    "Connect through the driver-side upper USB-A port with a data cable and OTG adapter.",
+    "After ADB is enabled, tap Connect device, select the vehicle in Chrome’s USB picker, and approve USB debugging on the head unit if prompted."
+  ],
+  "highlights": [
+    { "label": "Flow", "value": "Single page" },
+    { "label": "Content source", "value": "Public GitHub manifest" },
+    { "label": "Installer view", "value": "Terminal live log" },
+    { "label": "Packages", "value": "Any count" }
+  ],
+  "steps": [
+    {
+      "id": "connect",
+      "title": "Authorize the head unit",
+      "description": "Open the WebUSB picker, choose the car, and let the site establish an ADB session in-browser."
+    },
+    {
+      "id": "review",
+      "title": "Review the public payload",
+      "description": "Open the public script and package plan before you run anything."
+    },
+    {
+      "id": "run",
+      "title": "Execute sequentially",
+      "description": "Run commands and APK installs in order, with terminal-style output and a completion popup once the pipeline finishes."
+    }
+  ],
+  "guide": {
+    "title": "How to enable ADB",
+    "summary": "Use the trim-specific time, date, and encryption code below, then return here and connect from Chrome.",
+    "prerequisites": [
+      "Car must be on and the front driver-side USB ports should be illuminated.",
+      "Use the driver-side upper USB-A port only.",
+      "A USB-A OTG adapter is required or ADB will not initialize correctly.",
+      "Use a proper data cable, not a charge-only cable."
+    ],
+    "trims": [
+      {
+        "name": "Comfort / Luxury",
+        "time": "00:00 (12:00 AM)",
+        "date": "01 / 01 / 2024",
+        "code": "353000"
+      },
+      {
+        "name": "Flagship",
+        "time": "13:00 (1:00 PM)",
+        "date": "01 / 05 / 2024",
+        "code": "809877"
+      }
+    ],
+    "steps": [
+      {
+        "id": "prepare",
+        "title": "1. Prepare the connection and set the system time",
+        "bullets": [
+          "Connect the laptop to the driver-side upper USB-A port.",
+          "Use a USB-C to USB-A data cable together with a USB-A OTG adapter.",
+          "Set the head unit date and time using the trim-specific values shown above."
+        ]
+      },
+      {
+        "id": "dialer",
+        "title": "2. Open the hidden engineering menu",
+        "bullets": [
+          "Open the phone dialer on the main head unit screen.",
+          "Enter the code *#20240730#*."
+        ],
+        "note": "This opens the hidden engineering menu."
+      },
+      {
+        "id": "encryption",
+        "title": "3. Open the encryption settings",
+        "bullets": [
+          "Tap 加密设置 in the left-hand menu.",
+          "Press the blue button labelled 进入加密设置."
+        ]
+      },
+      {
+        "id": "code",
+        "title": "4. Enter the trim-specific encryption code",
+        "bullets": [
+          "Comfort / Luxury: 353000",
+          "Flagship: 809877",
+          "If the code fails, return to the dialer step and complete steps 2 to 4 within 60 seconds."
+        ]
+      },
+      {
+        "id": "adb",
+        "title": "5. Toggle ADB on",
+        "bullets": [
+          "Enable ADB in engineering settings.",
+          "When ADB turns on, the light on the driver-side USB port will switch off.",
+          "If your cable and OTG are correct, the light should illuminate again once the computer is properly connected."
+        ]
+      },
+      {
+        "id": "return",
+        "title": "6. Return here and connect from Chrome",
+        "bullets": [
+          "After ADB is enabled, you can reset the system time and date to the current values.",
+          "You can leave ADB enabled; there is no need to switch it off again.",
+          "Open this page in Chrome or Edge on a computer, or Chrome on an Android phone using OTG.",
+          "Tap Connect device, select the vehicle in Chrome’s USB dialog, then accept the USB debugging prompt on the head unit if it appears.",
+          "Run the installer once the terminal shows that the bridge is ready."
+        ]
+      }
+    ]
+  },
+  "execution": {
+    "terminalWelcome": "Remote manifest loaded successfully.",
+    "publicRepoUrl": "https://github.com/notg700owner/automotive-android-content",
+    "scriptUrl": "./install-script.sh",
+    "scriptLabel": "Public install script",
+    "scriptDescription": "This script is loaded from the public content repo so users can inspect it before running anything.",
+    "completionTitle": "Installer finished",
+    "completionMessage": "The execution pipeline completed. Replace the placeholder step with your real package actions when you are ready.",
+    "pipeline": [
+      {
+        "id": "placeholder-adb-devices",
+        "type": "host-placeholder",
+        "label": "Placeholder host command",
+        "description": "Visible for transparency only.",
+        "command": "adb devices",
+        "note": "Replace this later with real browser-safe steps."
+      }
+    ]
+  },
+  "legal": {
+    "title": "Read before installing",
+    "summary": "Running custom software on a vehicle head unit is inherently risky.",
+    "bullets": [
+      "You accept responsibility for any system instability, crashes, or unexpected vehicle behavior.",
+      "You accept responsibility for any warranty impact, service refusal, or data loss.",
+      "Only continue if you are comfortable using developer-style tools on the car."
+    ],
+    "acceptLabel": "I understand, continue",
+    "declineLabel": "Cancel"
+  },
+  "footer": {
+    "byline": "Private frontend, public script and manifest.",
+    "subline": "The live content can be updated from the public repo without redeploying the private site."
+  }
+}
