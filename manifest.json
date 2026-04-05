@@ -6,15 +6,10 @@
     "description": "This application helps you install apps on your car, and also sets their permissions, you can see which apps below.",
     "supportNote": [
       "If you want to add an app that is not listed here please contact support IT team.",
-      "\u000A -currently only lists adb devices for test",
-      "\u000A -TODO add Clock/Weather overlay"
     ]
   },
   "badges": [
-    "Free & Opensource",
-    "WebUSB / WebADB flow",
-    "Makes car faster**",
-    "Desktop and Android Chrome friendly"
+    "Clock & Weather App",
   ],
   "requirements": [
     "Press button How to enable ADB on your car first.", 
