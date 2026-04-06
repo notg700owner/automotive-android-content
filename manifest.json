@@ -123,78 +123,96 @@
   "execution": {
     "terminalWelcome": "Remote manifest loaded successfully.",
     "publicRepoUrl": "https://github.com/notg700owner/automotive-android-content",
-    "scriptUrl": "./install-script.sh",
-    "scriptLabel": "Public install script",
-    "scriptDescription": "This script is loaded from the public content repo so users can inspect it before running anything.",
+    "scriptLabel": "Public installer scripts",
+    "scriptDescription": "Each app exposes its own public script so users can inspect the intended actions before running anything.",
     "completionTitle": "Installer finished",
     "completionMessage": "The live package pipeline completed successfully.",
-    "pipeline": [
+    "apps": [
       {
-        "id": "remove-legacy-package",
-        "type": "shell",
-        "label": "Remove legacy package",
-        "description": "Remove the older package if it is already installed.",
-        "command": "pm uninstall com.g700.automation >/dev/null 2>&1 || true",
-        "optional": true
-      },
-      {
-        "id": "install-clock-weather",
-        "type": "package",
-        "label": "Install Clock & Weather",
-        "description": "Download and install the Clock & Weather APK from the public GitHub source.",
-        "url": "https://raw.githubusercontent.com/notg700owner/g700-clock-weather-overlay/main/update/g700-clock-weather-release.apk",
-        "fileName": "g700-clock-weather-release.apk",
-        "packageName": "com.g700.clockweather"
-      },
-      {
-        "id": "grant-runtime-permissions",
-        "type": "shell",
-        "label": "Grant app permissions",
-        "description": "Grant the runtime permissions required by the installed app.",
-        "command": "pm grant com.g700.clockweather android.permission.ACCESS_COARSE_LOCATION 2>/dev/null || true\npm grant com.g700.clockweather android.permission.ACCESS_FINE_LOCATION 2>/dev/null || true\npm grant com.g700.clockweather android.permission.POST_NOTIFICATIONS 2>/dev/null || true\npm grant com.g700.clockweather android.permission.ACCESS_BACKGROUND_LOCATION 2>/dev/null || true",
-        "optional": true
-      },
-      {
-        "id": "set-appops-and-whitelist",
-        "type": "shell",
-        "label": "Set app operations",
-        "description": "Apply app-ops permissions and background whitelist settings.",
-        "command": "appops set com.g700.clockweather ACCESS_BACKGROUND_LOCATION allow 2>/dev/null || true\nappops set com.g700.clockweather POST_NOTIFICATION allow 2>/dev/null || true\nappops set com.g700.clockweather REQUEST_INSTALL_PACKAGES allow 2>/dev/null || true\nappops set com.g700.clockweather SYSTEM_ALERT_WINDOW allow 2>/dev/null || true\ndumpsys deviceidle whitelist +com.g700.clockweather 2>/dev/null || true",
-        "optional": true
-      },
-      {
-        "id": "launch-installed-app",
-        "type": "shell",
-        "label": "Launch the app",
-        "description": "Open the installed app once setup is complete.",
-        "command": "monkey -p com.g700.clockweather -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1 || true",
-        "optional": true
-      },
-      {
-        "id": "verify-package-state",
-        "type": "shell",
-        "label": "Verify installation",
-        "description": "Check that the package is installed and visible on the device.",
-        "command": "echo \"[package]\"\npm list packages | grep -F \"com.g700.clockweather\" || echo \"NOT INSTALLED\"",
-        "optional": true
-      },
-      {
-        "id": "verify-permissions-and-appops",
-        "type": "shell",
-        "label": "Verify permissions and appops",
-        "description": "Print the package permissions and app-ops state for review.",
-        "command": "echo \"[requested/granted permissions]\"\ndumpsys package com.g700.clockweather | grep -E \"android.permission.(ACCESS_COARSE_LOCATION|ACCESS_FINE_LOCATION|ACCESS_BACKGROUND_LOCATION|POST_NOTIFICATIONS|REQUEST_INSTALL_PACKAGES|REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)|android.car.permission.CAR_EXTERIOR_ENVIRONMENT\" || true\necho \"[appops]\"\nappops get com.g700.clockweather 2>/dev/null | grep -E \"ACCESS_BACKGROUND_LOCATION|POST_NOTIFICATION|REQUEST_INSTALL_PACKAGES|SYSTEM_ALERT_WINDOW\" || echo \"No matching appops shown\"",
-        "optional": true
-      },
-      {
-        "id": "verify-runtime-state",
-        "type": "shell",
-        "label": "Verify runtime state",
-        "description": "Check launcher entries, running process, and service state.",
-        "command": "echo \"[receiver/service]\"\ndumpsys package com.g700.clockweather | grep -E \"BootReceiver|AutomationForegroundService|MAIN|LAUNCHER\" || true\necho \"[process]\"\npidof com.g700.clockweather || echo \"Process not running\"\necho \"[activity/service snapshot]\"\ndumpsys activity services | grep -A 20 -B 5 \"com.g700.clockweather\" || true",
-        "optional": true
+        "id": "clock-weather",
+        "name": "Clock & Weather",
+        "description": "Installs the Clock & Weather app, grants its permissions, and checks the runtime state.",
+        "scriptUrl": "./scripts/clock-weather.sh",
+        "scriptLabel": "Clock & Weather script",
+        "enabledByDefault": true,
+        "pipeline": [
+          {
+            "id": "remove-legacy-package",
+            "type": "shell",
+            "label": "Remove legacy package",
+            "description": "Remove the older package if it is already installed.",
+            "logMessage": "Removing old Clock & Weather package if it is present.",
+            "command": "pm uninstall com.g700.automation >/dev/null 2>&1 || true",
+            "optional": true
+          },
+          {
+            "id": "install-clock-weather",
+            "type": "package",
+            "label": "Install Clock & Weather",
+            "description": "Download and install the Clock & Weather APK from the public GitHub source.",
+            "logMessage": "Installing Clock & Weather.",
+            "url": "https://raw.githubusercontent.com/notg700owner/g700-clock-weather-overlay/main/update/g700-clock-weather-release.apk",
+            "fileName": "g700-clock-weather-release.apk",
+            "packageName": "com.g700.clockweather"
+          },
+          {
+            "id": "grant-runtime-permissions",
+            "type": "shell",
+            "label": "Grant app permissions",
+            "description": "Grant the runtime permissions required by the installed app.",
+            "logMessage": "Granting Clock & Weather permissions.",
+            "command": "pm grant com.g700.clockweather android.permission.ACCESS_COARSE_LOCATION 2>/dev/null || true\npm grant com.g700.clockweather android.permission.ACCESS_FINE_LOCATION 2>/dev/null || true\npm grant com.g700.clockweather android.permission.POST_NOTIFICATIONS 2>/dev/null || true\npm grant com.g700.clockweather android.permission.ACCESS_BACKGROUND_LOCATION 2>/dev/null || true",
+            "optional": true
+          },
+          {
+            "id": "set-appops-and-whitelist",
+            "type": "shell",
+            "label": "Set app operations",
+            "description": "Apply app-ops permissions and background whitelist settings.",
+            "logMessage": "Applying Clock & Weather app operations.",
+            "command": "appops set com.g700.clockweather ACCESS_BACKGROUND_LOCATION allow 2>/dev/null || true\nappops set com.g700.clockweather POST_NOTIFICATION allow 2>/dev/null || true\nappops set com.g700.clockweather REQUEST_INSTALL_PACKAGES allow 2>/dev/null || true\nappops set com.g700.clockweather SYSTEM_ALERT_WINDOW allow 2>/dev/null || true\ndumpsys deviceidle whitelist +com.g700.clockweather 2>/dev/null || true",
+            "optional": true
+          },
+          {
+            "id": "launch-installed-app",
+            "type": "shell",
+            "label": "Launch the app",
+            "description": "Open the installed app once setup is complete.",
+            "logMessage": "Launching Clock & Weather.",
+            "command": "monkey -p com.g700.clockweather -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1 || true",
+            "optional": true
+          },
+          {
+            "id": "verify-package-state",
+            "type": "shell",
+            "label": "Verify installation",
+            "description": "Check that the package is installed and visible on the device.",
+            "logMessage": "Checking package installation state.",
+            "command": "echo \"[package]\"\npm list packages | grep -F \"com.g700.clockweather\" || echo \"NOT INSTALLED\"",
+            "optional": true
+          },
+          {
+            "id": "verify-permissions-and-appops",
+            "type": "shell",
+            "label": "Verify permissions and appops",
+            "description": "Print the package permissions and app-ops state for review.",
+            "logMessage": "Checking granted permissions and app operations.",
+            "command": "echo \"[requested/granted permissions]\"\ndumpsys package com.g700.clockweather | grep -E \"android.permission.(ACCESS_COARSE_LOCATION|ACCESS_FINE_LOCATION|ACCESS_BACKGROUND_LOCATION|POST_NOTIFICATIONS|REQUEST_INSTALL_PACKAGES|REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)|android.car.permission.CAR_EXTERIOR_ENVIRONMENT\" || true\necho \"[appops]\"\nappops get com.g700.clockweather 2>/dev/null | grep -E \"ACCESS_BACKGROUND_LOCATION|POST_NOTIFICATION|REQUEST_INSTALL_PACKAGES|SYSTEM_ALERT_WINDOW\" || echo \"No matching appops shown\"",
+            "optional": true
+          },
+          {
+            "id": "verify-runtime-state",
+            "type": "shell",
+            "label": "Verify runtime state",
+            "description": "Check launcher entries, running process, and service state.",
+            "logMessage": "Checking runtime state and launcher visibility.",
+            "command": "echo \"[receiver/service]\"\ndumpsys package com.g700.clockweather | grep -E \"BootReceiver|AutomationForegroundService|MAIN|LAUNCHER\" || true\necho \"[process]\"\npidof com.g700.clockweather || echo \"Process not running\"\necho \"[activity/service snapshot]\"\ndumpsys activity services | grep -A 20 -B 5 \"com.g700.clockweather\" || true",
+            "optional": true
+          }
+        ]
       }
-    ]
+    ],
+    "pipeline": []
   },
   "legal": {
     "title": "Read before installing",
